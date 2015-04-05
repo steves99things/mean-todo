@@ -8,7 +8,13 @@ var methodOverride = require('method-override');
 var app = express();
 
 // config
-mongoose.connect('mongodb://localhost/test' | 'mongodb://heroku_app35583521:qoohqks42ivv6j49s8h8ea72go@ds061391.mongolab.com:61391/heroku_app35583521'; //connect to local mongodb
+app.configure('development', function() {
+	mongoos.connect('mongod://localhost/test');
+});
+app.configure('production', function() {
+	mongoose.connect('mongodb://' + process.env.MONGOLAB_URI + '/test');
+});
+
 
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
