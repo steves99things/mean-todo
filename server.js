@@ -11,7 +11,8 @@ var app = express();
 // config
 // mongoose.connect('mongodb://localhost/test'); //connect to local 
 var mongodbUri = process.env.MONGOLAB_URI;
-var uristring = mongodbUri || 'mongodb://localhost/test';
+var mongooseUri = uriUtil.formatMongoose(mongodbUri);
+var uristring = mongooseUri || 'mongodb://localhost/test';
 
 mongoose.connect(uristring, function(err, res) {
 	if (err) {
