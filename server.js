@@ -1,6 +1,7 @@
 // setup
 var express = require('express');
 var mongoose = require('mongoose');
+var uriUtil = require('mongodb-uri');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -9,7 +10,8 @@ var app = express();
 
 // config
 // mongoose.connect('mongodb://localhost/test'); //connect to local 
-var uristring = process.env.MONGOLAB_URI || 'mongodb://localhost/test';
+var mongodbUri = process.env.MONGOLAB_URI;
+var uristring = mongodbUri || 'mongodb://localhost/test';
 
 mongoose.connect(uristring, function(err, res) {
 	if (err) {
