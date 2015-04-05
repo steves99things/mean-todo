@@ -8,13 +8,16 @@ var methodOverride = require('method-override');
 var app = express();
 
 // config
-app.configure('development', function() {
-	mongoos.connect('mongod://localhost/test');
-});
-app.configure('production', function() {
-	mongoose.connect('mongodb://' + process.env.MONGOLAB_URI + '/test');
-});
+// mongoose.connect('mongodb://localhost/test'); //connect to local 
+var uristring = process.env.MONGOLAB_URI || 'mongodb://localhost/test';
 
+mongoose.connect(uristring, function(err, res) {
+	if (err) {
+		console.log('ERROR connecting to: ' + uristring + '. ' + err);
+	} else {
+		console.log('Succeeded connect to: ' + uristring + '.');
+	}
+});
 
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
